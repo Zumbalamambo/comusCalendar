@@ -23,13 +23,15 @@ public class ViewCalendarEventsFragment extends DialogFragment {
         DateFormat tf = DateFormat.getTimeInstance(DateFormat.SHORT);
         Date selectedDate = calFrag.getSelectedDate();
 
-        for (CalendarEvent event : calFrag.getEvents()) {
-            if (event.getStart().getDate() == selectedDate.getDate() ||
-                    event.getEnd().getDate() == selectedDate.getDate())
-                items.add(String.format("%s\n%s - %s",
-                        event.getDescription(),
-                        tf.format(event.getStart()),
-                        tf.format(event.getEnd())));
+        if (selectedDate !=null) {
+            for (CalendarEvent event : calFrag.getEvents()) {
+                if (event.getStart().getDate() == selectedDate.getDate() ||
+                        event.getEnd().getDate() == selectedDate.getDate())
+                    items.add(String.format("%s\n%s - %s\n",
+                            event.getDescription(),
+                            tf.format(event.getStart()),
+                            tf.format(event.getEnd())));
+            }
         }
 
         return new AlertDialog.Builder(getActivity())

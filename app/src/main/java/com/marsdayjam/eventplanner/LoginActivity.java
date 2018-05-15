@@ -149,8 +149,7 @@ public class LoginActivity extends Activity {
             cancel = true;
         }
 
-        WSQueryDataCitas ws_citas = new WSQueryDataCitas(this,email,password);
-        ws_citas.execute();
+
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -169,6 +168,9 @@ public class LoginActivity extends Activity {
             if (employee != null && employee.getPassword().equals(password)) {
                 user = employee;
                 finish();
+                dbController.deleteAllEvents();
+                WSQueryDataCitas ws_citas = new WSQueryDataCitas(this,email,password);
+                ws_citas.execute();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

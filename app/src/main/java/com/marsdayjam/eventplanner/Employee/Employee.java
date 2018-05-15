@@ -15,11 +15,6 @@ public class Employee {
     private long roleCode;
     private String roleTitle;
     private ArrayList<CalendarEvent> calendarEvents = new ArrayList<>();
-    private ContentResolver r;
-
-    public Employee(ContentResolver r){
-        this.r= r;
-    }
 
     public long getId() {
         return id;
@@ -83,9 +78,6 @@ public class Employee {
                 id, email, password, first, last, roleCode, roleTitle);
     }
 
-    public void save(){
-
-    }
 
     public ArrayList<CalendarEvent> getCalendarEvents() {
         return calendarEvents;

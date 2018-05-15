@@ -125,6 +125,21 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_CALENDAR);
 
         values = new ContentValues();
+        values.put(EmployeeTable.COLUMN_NAME_EMAIL, "servicios@comus.com.ec");
+        values.put(EmployeeTable.COLUMN_NAME_PASSWORD, "System");
+        values.put(EmployeeTable.COLUMN_NAME_FIRST, "Super");
+        values.put(EmployeeTable.COLUMN_NAME_LAST, "User");
+        values.put(EmployeeTable.COLUMN_NAME_ROLE, 1);
+        db.insert(DBContract.EmployeeTable.TABLE_NAME, null, values);
+
+        values.put(EmployeeTable.COLUMN_NAME_EMAIL, "gerencia@puntodental.com.ec");
+        values.put(EmployeeTable.COLUMN_NAME_PASSWORD, "Gracias1000");
+        values.put(EmployeeTable.COLUMN_NAME_FIRST, "Gerencia");
+        values.put(EmployeeTable.COLUMN_NAME_LAST, "Punto dental");
+        values.put(EmployeeTable.COLUMN_NAME_ROLE, 2);
+        db.insert(DBContract.EmployeeTable.TABLE_NAME, null, values);
+
+        /*values = new ContentValues();
         values.put(EmployeeTable.COLUMN_NAME_EMAIL, "celia.hodes@eventplanners.com");
         values.put(EmployeeTable.COLUMN_NAME_PASSWORD, "celiaHodes1234");
         values.put(EmployeeTable.COLUMN_NAME_FIRST, "Celia");
@@ -146,7 +161,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(EmployeeTable.COLUMN_NAME_FIRST, "Andy");
         values.put(EmployeeTable.COLUMN_NAME_LAST, "Botwin");
         values.put(EmployeeTable.COLUMN_NAME_ROLE, 3);
-        db.insert(DBContract.EmployeeTable.TABLE_NAME, null, values);
+        db.insert(DBContract.EmployeeTable.TABLE_NAME, null, values);*/
 
         values = new ContentValues();
         values.put(RolesTable.COLUMN_NAME_TITLE, "Human Resources");

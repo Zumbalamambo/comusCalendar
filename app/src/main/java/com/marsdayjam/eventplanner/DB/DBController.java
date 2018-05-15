@@ -272,6 +272,12 @@ public class DBController {
         db.delete(DBContract.EventTable.TABLE_NAME, selection, selectionArgs);
     }
 
+    public void deleteAllEvents(){
+
+        db.delete(DBContract.CalendarTable.TABLE_NAME, "", null);
+        db.delete(DBContract.EventTable.TABLE_NAME, "", null);
+    }
+
     // Gets an Event based on its id.
     public Event getEvent(long id) {
         String selection = DBContract.EventTable._ID + "=?";

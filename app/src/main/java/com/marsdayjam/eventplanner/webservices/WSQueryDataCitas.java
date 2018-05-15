@@ -3,6 +3,10 @@ package com.marsdayjam.eventplanner.webservices;
 import android.content.Context;
 
 
+import com.marsdayjam.eventplanner.Calendar.CalendarEvent;
+import com.marsdayjam.eventplanner.Calendar.CalendarFragment;
+import com.marsdayjam.eventplanner.DB.DBController;
+
 import org.idempiere.webservice.client.base.DataRow;
 import org.idempiere.webservice.client.base.Enums;
 import org.idempiere.webservice.client.base.Field;
@@ -51,6 +55,9 @@ public class WSQueryDataCitas extends WebService {
         data.addField("Password",Password);
         ws.setDataRow(data);
 
+
+        DBController dbController = DBController.getInstance(context);
+
         try {
             WindowTabDataResponse response = getClient().sendRequest(ws);
 
@@ -64,18 +71,29 @@ public class WSQueryDataCitas extends WebService {
 
                 for (int i = 0; i < response.getDataSet().getRowsCount(); i++) {
                     System.out.println("Row: " + (i + 1));
-
+                    CalendarEvent event = new CalendarEvent();
+                    event.setEmployee(dbController.getEmployee(EMail));
                     for (int j = 0; j < response.getDataSet().getRow(i).getFieldsCount(); j++) {
+
+
                         Field field = response.getDataSet().getRow(i).getFields().get(j);
                         System.out.println("Column: " + field.getColumn() + " = " + field.getStringValue());
                         switch (field.getColumn()) {
-                            case "C_Order_ID":
-                                System.out.println(field.getStringValue());
+                            case "StartTime":
+                                event.setStart(field.getDateValue());
+                                break;
+                            case "EndTime":
+                                event.setEnd(field.getDateValue());
+                                break;
+                            case "Description":
+                                event.setDescription(field.getStringValue());
                                 break;
 
                         }
 
                     }
+
+                    dbController.insertCalendarEvent(event);
                 }
             }
 

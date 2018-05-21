@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -25,13 +28,21 @@ public class ViewCalendarEventsFragment extends DialogFragment {
 
         if (selectedDate !=null) {
             for (CalendarEvent event : calFrag.getEvents()) {
-                if (event.getStart().getDate() == selectedDate.getDate() ||
-                        event.getEnd().getDate() == selectedDate.getDate())
-                    items.add(String.format("%s\n%s - %s\n",
-                            event.getDescription(),
-                            tf.format(event.getStart()),
-                            tf.format(event.getEnd())));
+                Timestamp startDate = new Timestamp(event.getStart().getTime());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    java.util.Date Date = sdf.parse(startDate.toString());
+                    if (Date.compareTo(selectedDate) == 0)
+                        items.add(String.format("%s\n%s - %s\n",
+                                event.getDescription(),
+                                tf.format(event.getStart()),
+                                tf.format(event.getEnd())));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
             }
+
         }
 
         return new AlertDialog.Builder(getActivity())

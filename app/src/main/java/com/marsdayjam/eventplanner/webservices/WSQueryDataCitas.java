@@ -13,6 +13,8 @@ import org.idempiere.webservice.client.base.Field;
 import org.idempiere.webservice.client.request.QueryDataRequest;
 import org.idempiere.webservice.client.response.WindowTabDataResponse;
 
+import java.util.Date;
+
 
 /**
  * Created by soropeza on 21/06/17.
@@ -47,6 +49,7 @@ public class WSQueryDataCitas extends WebService {
         QueryDataRequest ws = new QueryDataRequest();
         ws.setWebServiceType(getWebServiceType());
         ws.setLogin(getLogin());
+        Date today = new Date();
         //ws.setOffset(3);
         // ws.setLimit(50);
 
@@ -68,18 +71,19 @@ public class WSQueryDataCitas extends WebService {
                 System.out.println("Total rows: " + response.getTotalRows());
                 System.out.println("Num rows: " + response.getNumRows());
                 System.out.println("Start row: " + response.getStartRow());
-
-                for (int i = 0; i < response.getDataSet().getRowsCount(); i++) {
+                dbController.deleteAllEvents();
+                for1:for (int i = 0; i < response.getDataSet().getRowsCount(); i++) {
                     System.out.println("Row: " + (i + 1));
                     CalendarEvent event = new CalendarEvent();
                     event.setEmployee(dbController.getEmployee(EMail));
                     for (int j = 0; j < response.getDataSet().getRow(i).getFieldsCount(); j++) {
 
-
                         Field field = response.getDataSet().getRow(i).getFields().get(j);
                         System.out.println("Column: " + field.getColumn() + " = " + field.getStringValue());
                         switch (field.getColumn()) {
                             case "StartTime":
+                                if(field.getDateValue().compareTo(today)<0)
+                                    break for1;
                                 event.setStart(field.getDateValue());
                                 break;
                             case "EndTime":
@@ -88,9 +92,7 @@ public class WSQueryDataCitas extends WebService {
                             case "Description":
                                 event.setDescription(field.getStringValue());
                                 break;
-
                         }
-
                     }
 
                     dbController.insertCalendarEvent(event);

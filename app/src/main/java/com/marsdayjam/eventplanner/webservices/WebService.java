@@ -43,9 +43,11 @@ public class WebService extends AsyncTask<Void, Integer, Void> implements I_WebS
         password = setup.getString("Password", "SuperPunto*");
         client = setup.getString("Client", "1000000");
         role = setup.getString("Role", "1000000");
-        org = setup.getString("Org", "0");
+        org = setup.getString("Org", "1000000");
         warehouse = setup.getString("Warehouse","0");
-        webServiceAddress = setup.getString("WebServiceAddress", "http://192.168.29.101:8080");
+        webServiceAddress = setup.getString("WebServiceAddress", "http://puntodental2.comus.com.ec:8090");
+        webServiceAddress = setup.getString("WebServiceAddress", "http://erp.puntodental.com.ec:8089");
+        //webServiceAddress = setup.getString("WebServiceAddress", "http://192.168.29.101:8080");
       //  priceListVersion = setup.getString("PriceListVersion", "0");
     }
 

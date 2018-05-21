@@ -168,7 +168,6 @@ public class LoginActivity extends Activity {
             if (employee != null && employee.getPassword().equals(password)) {
                 user = employee;
                 finish();
-                dbController.deleteAllEvents();
                 WSQueryDataCitas ws_citas = new WSQueryDataCitas(this,email,password);
                 ws_citas.execute();
             } else {

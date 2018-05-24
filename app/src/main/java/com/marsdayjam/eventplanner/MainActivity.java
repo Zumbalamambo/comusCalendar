@@ -3,6 +3,7 @@ package com.marsdayjam.eventplanner;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
@@ -22,10 +23,12 @@ import com.marsdayjam.eventplanner.DB.DBContract;
 import com.marsdayjam.eventplanner.Employee.Employee;
 import com.marsdayjam.eventplanner.Employee.EmployeeFragment;
 import com.marsdayjam.eventplanner.Employee.HRFragment;
+import com.marsdayjam.eventplanner.utils.SetupData;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     private static final int LOG_IN_REQUEST = 0;
+    private SharedPreferences setup;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -53,6 +56,8 @@ public class MainActivity extends ActionBarActivity
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
+        setup = SetupData.getInstance(this).getSharedPreferences();
 
         FragmentManager fm = getSupportFragmentManager();
 
@@ -105,6 +110,9 @@ public class MainActivity extends ActionBarActivity
                                 user.getId());
                     }
                     break;
+                case 3:
+                    fragment = SetupFragment.newInstance(setup);
+                    break;
                 default:
                     fragment = PlaceholderFragment.newInstance(-1);
             }
@@ -122,6 +130,9 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 3:
                 mTitle = getString(R.string.title_section3);
+                break;
+            case 4:
+                mTitle = "Setup Sync";
                 break;
             default:
                 mTitle = getString(R.string.untitled);

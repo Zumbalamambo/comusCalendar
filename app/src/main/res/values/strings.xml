@@ -42,6 +42,20 @@
 
     <string name="logout">Logout</string>
 
+    <string name="string_username">Username</string>
+    <string name="string_password">Password</string>
+    <string name="string_passwordRepeat">Repeat password</string>
+    <string name="string_encrypt_database">Encrypt Database</string>
+    <string name="string_decrypt_database">Decrypt Database</string>
+    <string name="string_language">Language</string>
+    <string name="string_client">Client</string>
+    <string name="string_role">Role</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="string_organization">Organization</string>
+    <string name="string_warehouse">Warehouse</string>
+    <string name="string_priceListVersion">Price List Version</string>
+    <string name="string_webservice">Webservice Address</string>
+
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

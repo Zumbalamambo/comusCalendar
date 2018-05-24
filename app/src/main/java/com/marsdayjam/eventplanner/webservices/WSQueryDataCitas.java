@@ -4,8 +4,8 @@ import android.content.Context;
 
 
 import com.marsdayjam.eventplanner.Calendar.CalendarEvent;
-import com.marsdayjam.eventplanner.Calendar.CalendarFragment;
 import com.marsdayjam.eventplanner.DB.DBController;
+import com.marsdayjam.eventplanner.utils.ViewUtils;
 
 import org.idempiere.webservice.client.base.DataRow;
 import org.idempiere.webservice.client.base.Enums;
@@ -24,6 +24,7 @@ public class WSQueryDataCitas extends WebService {
 
     private final String EMail;
     private final String Password;
+    private String msg = "";
 
     public WSQueryDataCitas(Context context, String EMail, String Password ) {
         super(context);
@@ -45,7 +46,7 @@ public class WSQueryDataCitas extends WebService {
 
     @Override
     public String executeWS() {
-        String msj = "";
+
         QueryDataRequest ws = new QueryDataRequest();
         ws.setWebServiceType(getWebServiceType());
         ws.setLogin(getLogin());
@@ -58,7 +59,7 @@ public class WSQueryDataCitas extends WebService {
         data.addField("Password",Password);
         ws.setDataRow(data);
 
-
+        int c = 0;
         DBController dbController = DBController.getInstance(context);
 
         try {
@@ -66,7 +67,7 @@ public class WSQueryDataCitas extends WebService {
 
             if (response.getStatus() == Enums.WebServiceResponseStatus.Error) {
                 //ViewUtils.displayLongToast(context, response.getErrorMessage());
-                msj = response.getErrorMessage();
+                msg = response.getErrorMessage();
             } else {
                 System.out.println("Total rows: " + response.getTotalRows());
                 System.out.println("Num rows: " + response.getNumRows());
@@ -96,14 +97,24 @@ public class WSQueryDataCitas extends WebService {
                     }
 
                     dbController.insertCalendarEvent(event);
+                    c++;
+                }
+                if (c==0){
+                    msg = "No hay citas para el usuario: " +EMail;
+                } else{
+                    msg = "Citas sincronizadas "+c;
                 }
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            msj =  e.getMessage()+" "+e.getCause();
+            msg =  e.getMessage()+" "+e.getCause();
         }
-        return msj;
+        return msg;
     }
-
+    @Override
+    protected void onPostExecute(Void result) {
+        super.onPostExecute(result);
+        ViewUtils.displayLongToast(context, msg);
+    }
 }

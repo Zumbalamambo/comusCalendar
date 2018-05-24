@@ -17,6 +17,10 @@ public class TimePickerFragment extends DialogFragment {
         this.listener = listener;
     }
 
+    public TimePickerFragment() {
+
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
